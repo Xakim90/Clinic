@@ -1,0 +1,14 @@
+.cardHeight{
+
+height: 20rem!important;
+
+}
+.miniCardHeight{
+
+    height: 10rem!important;
+    
+}
+.card-body {
+    overflow-y: scroll;
+}
+

@@ -1,0 +1,13 @@
+.label{
+    width: 20%;
+    font-weight: 600;
+}
+.input{
+    
+}
+.errorDiv {
+    font-size: 0.7rem;
+    color: red;
+    text-align: center;
+    padding-left: 3em;
+}
