@@ -2,12 +2,23 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const ClientsSchema = new Schema({
-  firstName: String,
-  secondName: String,
+  name: String,
+  surname: String,
   status: String,
+  birthCity: Number,
+  birthYear: Number,
   clientData: Array,
 });
 
+ClientsSchema.methods.toAuthJSON = function () {
+  return {
+    _id: this._id,
+    name: this.name,
+    surname: this.surname,
+    status: this.status,
+    clientData: this.clientData
+  };
+};
 // ClientsSchema.methods.toAuthJSON = function () {
 //   return {
 //     _id: this._id,

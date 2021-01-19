@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { userPostFetch } from '../../actions/actions';
+import TextField from '@material-ui/core/TextField';
 import styles from './Signin.module.css'
 
 class Signup extends Component {
@@ -13,10 +14,10 @@ class Signup extends Component {
     role: '',
   }
 
-  change = event => {
+  handleChange = event => {
     this.setState({
       [event.target.name]: event.target.value
-    });
+    });;
   }
 
   clearState() {
@@ -32,41 +33,58 @@ class Signup extends Component {
 
   render() {
     return (
-      <>
+      <div className="grid grid-cols-1 gap-12">
         <form onSubmit={this.submit}>
-          <h1>Sign Up For An Account</h1>
-
-          <label className={styles.label}>name</label>
-          <input
-            name='username'
-            placeholder='username'
+          <h1>Регистрация</h1>
+          <br />
+          <TextField
+            id="outlined-email-input-01"
+            label="Имя"
+            type="text"
+            variant="outlined"
             value={this.state.username}
-            onChange={this.change}
-          /><br />
-
-          <label className={styles.label}>email</label>
-          <input
-            type='email'
-            name='email'
-            placeholder='email'
+            onChange={this.handleChange}
+            size="small"
+            name="username"
+          />
+          <br />
+          <br />
+          <TextField
+            id="outlined-email-input-02"
+            label="Email"
+            type="email"
+            autoComplete="current-email"
+            variant="outlined"
             value={this.state.email}
-            onChange={this.change}
-          /><br />
-
-          <label className={styles.label}>Password</label>
-          <input
-            type='password'
-            name='password'
-            placeholder='Password'
+            onChange={this.handleChange}
+            size="small"
+            name="email"
+          />
+          <br />
+          <br />
+          <TextField
+            id="outlined-password-input"
+            label="Password"
+            type="password"
+            autoComplete="current-password"
+            variant="outlined"
             value={this.state.password}
-            onChange={this.change}
-          /><br />
-
-
-          <label className={styles.label}>role:</label>
-          <select value={this.state.role} name='role' onChange={this.change}>
-            <option>Select your role</option>
-            <option value="admin">admin</option>
+            onChange={this.handleChange}
+            size="small"
+            name="password"
+          />
+          <br />
+          <br />
+          <select
+            value={this.state.role}
+            className="border py-2 px-2"
+            name="role"
+            onChange={this.handleChange}
+          >
+            <option>Выберите вашу роль в системе:</option>
+            <option className="border py-2 px-3" value="admin">
+              admin
+            </option>
             <option value="operator">operator</option>
             <option value="client">client</option>
           </select>
@@ -74,15 +92,16 @@ class Signup extends Component {
           <div className="col-md-6">
             <p id="signupErrorDiv" className={styles.errorDiv}></p>
           </div>
-          <input type='submit' className="btn btn-sm btn-light" />
+          <input type="submit" className="btn btn-sm btn-light" />
         </form>
-        <br />
         <div className="signup">
           <b>У вас уже есть аккаунт? тогда: </b>
-          <Link to="/signin" className="btn btn-sm btn-light">Войдите</Link>
+          <Link to="/signin" className="btn btn-sm btn-light">
+            Войдите
+          </Link>
         </div>
-      </>
-    )
+      </div>
+    );
   }
 }
 

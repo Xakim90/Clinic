@@ -1,8 +1,13 @@
-
+const url = "http://localhost:8080"
 
 const loginUser = user => ({
   type: 'INITIALIZED_SUCCESS',
   payload: user
+})
+
+const loadClients = client => ({
+  type: 'LOADED_SUCCESS',
+  payload: client
 })
 
 export const logoutUser = () => ({
@@ -13,7 +18,7 @@ export const logoutUser = () => ({
 
 export const userPostFetch = user => {
   return dispatch => {
-    return fetch("/api/users", {
+    return fetch(`${url}/api/users`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -43,25 +48,26 @@ export const userPostFetch = user => {
 
 export const userLoginFetch = user => {
   return dispatch => {
-    return fetch("/api/users/login", {
-      method: "POST",
+    return fetch(`${url}/api/users/login`, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
       body: JSON.stringify({ user }),
     })
-      .then(resp => resp.json())
-      .then(data => {
+      .then((resp) => resp.json())
+      .then((data) => {
         if (data.errors) {
-          document.getElementById('errorDiv').innerHTML = 'wrong email or password';
-          return
+          document.getElementById('errorDiv').innerHTML =
+            'wrong email or password';
+          return;
         }
         if (data.user) {
-          localStorage.setItem("token", data.user.token)
+          localStorage.setItem('token', data.user.token);
           dispatch(loginUser(data.user));
         }
-      })
+      });
   }
 }
 
@@ -69,24 +75,23 @@ export const getProfileFetch = () => {
   return dispatch => {
     const token = localStorage.token;
     if (token) {
-      return fetch("/api/users/auth", {
-        method: "GET",
+      return fetch(`${url}/api/users/auth`, {
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       })
-        .then(resp => resp.json())
-        .then(data => {
+        .then((resp) => resp.json())
+        .then((data) => {
           if (data.message) {
             // Будет ошибка если token не дествительный
-            localStorage.removeItem("token")
+            localStorage.removeItem('token');
           } else if (data.user !== undefined && data.user !== null) {
-            dispatch(loginUser(data.user))
-
+            dispatch(loginUser(data.user));
           }
-        })
+        });
     }
   }
 }
@@ -98,14 +103,53 @@ export const logout = () => {
   }
 }
 
-  // export const auth = (email, password) => {
-  //   return async dispatch => {
-  //     try {
-  //       const response = await axios.get('http://localhost:4000/api/auth', 
-  //       {headers:{Authorization: `Bearer ${localStorage.getItem('token')}`}})
-  //     } catch (e) {
-  //       alert (e.response.data.message);
-  //       localStorage.removeItem('token')
-  //     }
-  //   }
-  // }
+export const getClientsFetch = () => {
+  return (dispatch) => {
+    const token = localStorage.token;
+    if (token) {
+      return fetch(`${url}/api/clients`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((resp) => resp.json())
+        .then((data) => {
+          if (data.message) {
+            // Будет ошибка если token не дествительный
+            // localStorage.removeItem('token');
+          } else if (data !== undefined && data !== null) {
+            dispatch(loadClients(data));
+          }
+        });
+    }
+  };
+};
+
+export const clientPostFetch = (client) => {
+  return (dispatch) => {
+    return fetch(`${url}/api/clients`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({ client }),
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        if (data.message !== undefined) {
+          console.log('data.message');
+        }
+        if (data !== undefined) {
+          dispatch(loadClients(data.client));
+          // localStorage.setItem('token', data.user.token);
+          // dispatch(loginUser(data.user));
+        }
+        if (data.errors !== undefined) {
+        }
+      });
+  };
+};

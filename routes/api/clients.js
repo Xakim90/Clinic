@@ -14,21 +14,25 @@ router.post("/", (req, res, next) => {
   const {
     body: { client },
   } = req;
-  const finalclient = new Clients(client);
 
-  return finalclient
-    .save()
-    .then(() => res.json({ client: finalclient.toAuthJSON() }));
+  // if (!client.name) {
+  //   return res.status(422).json({
+  //     errors: {
+  //       name: 'is required',
+  //     },
+  //   });
+  // }
+  // if (!client.surname) {
+  //   return res.status(422).json({
+  //     errors: {
+  //       role: 'is required',
+  //     },
+  //   });
+  // }
+  
+  const finalClient = new Clients(client);
+  return finalClient.save()
+    .then(() => res.json({ client: finalClient.toAuthJSON() }));
 });
-
-// import User from "./user.model";
-// export async function signUp(req, res) {
-//   try {
-//     const user = await User.create(req.body);
-//     return res.status(201).json(user);
-//   } catch (e) {
-//     return res.status(500).json(e);
-//   }
-// }
 
 module.exports = router;

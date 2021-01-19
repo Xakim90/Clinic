@@ -3,15 +3,10 @@ import { connect } from 'react-redux';
 import { userLoginFetch } from '../../actions/actions';
 import styles from './Signin.module.css';
 import { Link } from 'react-router-dom';
+import TextField from '@material-ui/core/TextField';
 
 
 class Signin extends Component {
-  componentDidMount() {
-    console.log(this.props)
-    console.log(this.state)
-  }
-
-
   state = {
     email: "",
     password: ""
@@ -19,7 +14,7 @@ class Signin extends Component {
 
   onInputChange = event => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
   }
 
@@ -30,42 +25,51 @@ class Signin extends Component {
 
   render() {
     return (
-      <div>
+      <div className="grid grid-cols-1 gap-12">
         <form onSubmit={this.onInputSubmit}>
-          <h1>Sign In</h1>
-
-          <label className={styles.label}>Email</label>
-          <input
-            name='email'
-            placeholder='please enter your email'
+          <h1>Вход</h1>
+          <br/>
+          <span>Вы можете ввести email:admin@gmail.com и пароль:admin чтобы войти и протестировать систему!</span>
+          <br />
+          <br />
+          <TextField
+            id="outlined-email-input"
+            label="Email"
+            type="email"
+            autoComplete="current-email"
+            variant="outlined"
             value={this.state.email}
             onChange={this.onInputChange}
-            className={styles.input}
-          /><br />
-
-          <label className={styles.label}>Password</label>
-          <input
-            type='password'
-            name='password'
-            placeholder='enter the password'
+            size="small"
+            name="email"
+          />
+          <br />
+          <br />
+          <TextField
+            id="outlined-password-input"
+            label="Password"
+            type="password"
+            autoComplete="current-password"
+            variant="outlined"
             value={this.state.password}
             onChange={this.onInputChange}
-            className={styles.input}
+            size="small"
+            name="password"
           />
           <div className="col-6">
             <div id="errorDiv" className={styles.errorDiv}></div>
           </div>
           <br />
-          <input type='submit' className="btn btn-sm btn-light" />
+          <input type="submit" className="btn btn-sm btn-light" />
         </form>
-        <br />
         <div>
           <b>У вас еще нет аккаунта? тогда: </b>
-          <Link to="/signup" className="btn btn-sm btn-light">Зарегистрируйтесь</Link>
+          <Link to="/signup" className="btn btn-sm btn-light">
+            Зарегистрируйтесь
+          </Link>
         </div>
       </div>
-
-    )
+    );
   }
 }
 
