@@ -18,7 +18,7 @@ export const logoutUser = () => ({
 
 export const userPostFetch = user => {
   return dispatch => {
-    return fetch(`${url}/api/users`, {
+    return fetch(`/api/users`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ export const userPostFetch = user => {
 
 export const userLoginFetch = user => {
   return dispatch => {
-    return fetch(`${url}/api/users/login`, {
+    return fetch(`/api/users/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -75,7 +75,7 @@ export const getProfileFetch = () => {
   return dispatch => {
     const token = localStorage.token;
     if (token) {
-      return fetch(`${url}/api/users/auth`, {
+      return fetch(`/api/users/auth`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -107,7 +107,7 @@ export const getClientsFetch = () => {
   return (dispatch) => {
     const token = localStorage.token;
     if (token) {
-      return fetch(`${url}/api/clients`, {
+      return fetch(`/api/clients`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
