@@ -47,5 +47,8 @@
     "node",
     "heroku",
     "express"
-  ]
+  ],
+  "devDependencies": {
+    "stylelint-config-recommended": "^3.0.0"
+  }
 }
