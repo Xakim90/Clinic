@@ -130,7 +130,7 @@ export const getClientsFetch = () => {
 
 export const clientPostFetch = (client) => {
   return (dispatch) => {
-    return fetch(`${url}/api/clients`, {
+    return fetch(`/api/clients`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
