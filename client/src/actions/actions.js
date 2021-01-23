@@ -1,4 +1,5 @@
-const url = "http://localhost:8080"
+//const url = "http://localhost:8080"
+const url = ""
 
 const loginUser = user => ({
   type: 'INITIALIZED_SUCCESS',
@@ -18,7 +19,7 @@ export const logoutUser = () => ({
 
 export const userPostFetch = user => {
   return dispatch => {
-    return fetch(`/api/users`, {
+    return fetch(`${url}/api/users`, {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -48,7 +49,7 @@ export const userPostFetch = user => {
 
 export const userLoginFetch = user => {
   return dispatch => {
-    return fetch(`/api/users/login`, {
+    return fetch(`${url}/api/users/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -75,7 +76,7 @@ export const getProfileFetch = () => {
   return dispatch => {
     const token = localStorage.token;
     if (token) {
-      return fetch(`/api/users/auth`, {
+      return fetch(`${url}/api/users/auth`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -107,7 +108,7 @@ export const getClientsFetch = () => {
   return (dispatch) => {
     const token = localStorage.token;
     if (token) {
-      return fetch(`/api/clients`, {
+      return fetch(`${url}/api/clients`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -130,7 +131,7 @@ export const getClientsFetch = () => {
 
 export const clientPostFetch = (client) => {
   return (dispatch) => {
-    return fetch(`/api/clients`, {
+    return fetch(`${url}/api/clients`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -145,6 +146,44 @@ export const clientPostFetch = (client) => {
         }
         if (data !== undefined) {
           dispatch(loadClients(data.client));
+          // localStorage.setItem('token', data.user.token);
+          // dispatch(loginUser(data.user));
+        }
+        if (data.errors !== undefined) {
+        }
+      });
+  };
+};
+export const removeClient = (id) => {
+  return (dispatch) => {
+    return fetch(`${url}/api/clients`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({ id }),
+    });
+  };
+};
+
+export const updateClient = ( newData ) => {
+  return (dispatch) => {
+    return fetch(`${url}/api/clients`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify(newData),
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        if (data.message !== undefined) {
+          console.log('data.message');
+        }
+        if (data !== undefined) {
+          // dispatch(loadClients(data.client));
           // localStorage.setItem('token', data.user.token);
           // dispatch(loginUser(data.user));
         }

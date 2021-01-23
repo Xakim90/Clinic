@@ -17,117 +17,116 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 
 
 class TableMaterial extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
+  componentDidUpdate(prevProps) {
+    if (prevProps.children !== this.props.children) {
+      //this.$el.trigger('chosen:updated');
+    }
   }
-  componentDidMount() {
-    console.log(this.props);
-  }
-  rowAdd = () => {
-    this.props.clientPostFetch(this.state);
+
+  rowAdd = (newData) => {
+    this.props.clientPostFetch(newData);
     this.props.getClientsFetch();
   };
-  rowUpdate = () => {
+  rowUpdate = (newData) => {
+    this.props.updateClient(newData);
     this.props.getClientsFetch();
   };
-  rowDelete = () => {
+  rowDelete = (id) => {
+    this.props.removeClient(id);
     this.props.getClientsFetch();
   };
   render() {
     return (
-          <MaterialTable
-            title="Таблица пациентов"
-            data={this.props.clients}
-            // style={{ display: 'flex' }}
-            columns={[
-              { title: 'Имя', field: 'name' },
-              { title: 'Фамилмя', field: 'surname' },
-              { title: 'Статус', field: 'status' },
-              { title: 'Год рождения', field: 'birthYear', type: 'numeric' },
-              {
-                title: 'Место проживания',
-                field: 'birthCity',
-                lookup: {
-                  1: 'Ташкент',
-                  10: 'Ташкентская область',
-                  20: 'Сырдарьинская область',
-                  25: 'Джизакская область',
-                  30: 'Самаркандская область',
-                  40: 'Ферганская область',
-                  50: 'Наманганская область',
-                  60: 'Андижанская область',
-                  70: 'Кашкадарьинская область',
-                  75: 'Сурхандарьинская область',
-                  80: 'Бухарская область',
-                  85: 'Навоийская область',
-                  90: 'Хорезмская область',
-                  95: 'Республика Каракалпакстан',
-                },
-              },
-            ]}
-            actions={[
-              {
-                icon: SaveIcon,
-                tooltip: 'Save User',
-                onClick: (event, rowData) => alert('You saved ' + rowData.name),
-              },
-              // {
-              //   icon: DeleteIcon,
-              //   tooltip: 'Delete User',
-              //   onClick: (event, rowData) =>
-              //     window.confirm('You want to delete ' + rowData.name),
-              // },
-            ]}
-            icons={{
-              Search: SearchIcon,
-              ResetSearch: ClearIcon,
-              Edit: EditIcon,
-              Delete: DeleteForeverIcon,
-              Save: SaveIcon,
-              Cancel: CancelIcon,
-              Check: CheckBoxIcon,
-              Clear: ClearIcon,
-              FirstPage: FirstPageIcon,
-              LastPage: LastPageIcon,
-              PreviousPage: ChevronLeftIcon,
-              NextPage: ChevronRightIcon,
-              Add: AddBoxIcon,
-              SortArrow: ArrowUpwardIcon,
-            }}
-            editable={{
-              onRowAdd: (newData) =>
-                new Promise((resolve, reject) => {
-                  setTimeout(() => {
-                    this.setState(newData);
-                    resolve();
-                    this.rowAdd();
-                  }, 1000);
-                }),
-              onRowUpdate: (newData, oldData) =>
-                new Promise((resolve, reject) => {
-                  setTimeout(() => {
-                    const dataUpdate = [...this.props.clients];
-                    const index = oldData.tableData.id;
-                    dataUpdate[index] = newData;
-                    setData([...dataUpdate]);
-                    resolve();
-                    this.rowUpdate();
-                  }, 1000);
-                }),
-              onRowDelete: (oldData) =>
-                new Promise((resolve, reject) => {
-                  setTimeout(() => {
-                    const dataDelete = [...this.props.clients];
-                    const index = oldData.tableData.id;
-                    dataDelete.splice(index, 1);
-                    this.setState([...dataDelete]);
-                    resolve();
-                    this.rowDelete();
-                  }, 1000);
-                }),
-            }}
-          />
+      <MaterialTable
+        title="Таблица пациентов"
+        data={this.props.clients}
+        // style={{ display: 'flex' }}
+        columns={[
+          { title: 'Имя', field: 'name' },
+          { title: 'Фамилмя', field: 'surname' },
+          { title: 'Статус', field: 'status' },
+          { title: 'Год рождения', field: 'birthYear', type: 'numeric' },
+          {
+            title: 'Место проживания',
+            field: 'birthCity',
+            lookup: {
+              1: 'Ташкент',
+              10: 'Ташкентская область',
+              20: 'Сырдарьинская область',
+              25: 'Джизакская область',
+              30: 'Самаркандская область',
+              40: 'Ферганская область',
+              50: 'Наманганская область',
+              60: 'Андижанская область',
+              70: 'Кашкадарьинская область',
+              75: 'Сурхандарьинская область',
+              80: 'Бухарская область',
+              85: 'Навоийская область',
+              90: 'Хорезмская область',
+              95: 'Республика Каракалпакстан',
+            },
+          },
+        ]}
+        actions={[
+          {
+            icon: SaveIcon,
+            tooltip: 'Save User',
+            onClick: (event, rowData) => alert('You saved ' + rowData.name),
+          },
+          // {
+          //   icon: DeleteIcon,
+          //   tooltip: 'Delete User',
+          //   onClick: (event, rowData) =>
+          //     window.confirm('You want to delete ' + rowData.name),
+          // },
+        ]}
+        icons={{
+          Search: SearchIcon,
+          ResetSearch: ClearIcon,
+          Edit: EditIcon,
+          Delete: DeleteForeverIcon,
+          Save: SaveIcon,
+          Cancel: CancelIcon,
+          Check: CheckBoxIcon,
+          Clear: ClearIcon,
+          FirstPage: FirstPageIcon,
+          LastPage: LastPageIcon,
+          PreviousPage: ChevronLeftIcon,
+          NextPage: ChevronRightIcon,
+          Add: AddBoxIcon,
+          SortArrow: ArrowUpwardIcon,
+        }}
+        editable={{
+          onRowAdd: (newData) =>
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                resolve();
+                this.rowAdd(newData);
+              }, 1000);
+            }),
+          onRowUpdate: (newData, oldData) =>
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                const dataUpdate = [...this.props.clients];
+                const index = oldData.tableData.id;
+                dataUpdate[index] = newData;
+                resolve();
+                this.rowUpdate(newData);
+              }, 1000);
+            }),
+          onRowDelete: (oldData) =>
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                const dataDelete = [...this.props.clients];
+                const index = oldData.tableData.id;
+                const _id = oldData._id;
+                dataDelete.splice(index, 1);
+                resolve();
+                this.rowDelete(_id);
+              }, 1000);
+            }),
+        }}
+      />
     );
   }
 }

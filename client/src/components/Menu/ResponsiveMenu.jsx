@@ -14,6 +14,7 @@ import TableContainer from '../../components/Table/Table';
 import Content from '../../components/Content/Content';
 import Signin from '../../components/Auth/Signin';
 import Home from '../../components/Home/Home';
+import Clock from '../../components/Test/Clock';
 import RegClient from '../../components/Forms/RegClient';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
@@ -69,8 +70,6 @@ function ResponsiveMenu(props) {
   };
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
-    console.log('handle');
-    console.log(event.currentTarget);
   };
 
   const drawer = (
@@ -149,13 +148,12 @@ function ResponsiveMenu(props) {
       <main className={classes.content}>
         <div className={classes.toolbar} />
 
-        <Route path="/">
-          {console.log(props.initialized)}
+        <Route exact path="/">
           {!props.initialized ? (
-            <Redirect to="/signin" />
+            <Signin />
           ) : (
-            <Redirect to="/table" />
-          )}
+              <TableContainer />
+            )}
         </Route>
         <Route exact path="/signin">
           <Signin />
@@ -183,6 +181,9 @@ function ResponsiveMenu(props) {
 
         <Route exact path="/home">
           <Home />
+        </Route>
+        <Route exact path="/test">
+          <Clock />
         </Route>
       </main>
     </div>
