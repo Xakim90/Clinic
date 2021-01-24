@@ -8,6 +8,7 @@ import {
   BrowserRouter,
   Redirect,
   Route,
+  Router,
   withRouter,
 } from 'react-router-dom';
 import { getProfileFetch } from './actions/actions';
@@ -26,18 +27,10 @@ class App extends React.Component {
   };
   render() {
     return (
-      <div className="app-wrapper">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12">
-              <ResponsiveMenu
-                initialized={this.props.initialized}
-                logout={this.logout}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+      <ResponsiveMenu
+        initialized={this.props.initialized}
+        logout={this.logout}
+      />
     );
   }
 }

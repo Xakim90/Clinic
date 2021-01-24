@@ -19,7 +19,6 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 class TableMaterial extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.children !== this.props.children) {
-      //this.$el.trigger('chosen:updated');
     }
   }
 
@@ -40,10 +39,9 @@ class TableMaterial extends React.Component {
       <MaterialTable
         title="Таблица пациентов"
         data={this.props.clients}
-        // style={{ display: 'flex' }}
         columns={[
           { title: 'Имя', field: 'name' },
-          { title: 'Фамилмя', field: 'surname' },
+          { title: 'Фамилия', field: 'surname' },
           { title: 'Статус', field: 'status' },
           { title: 'Год рождения', field: 'birthYear', type: 'numeric' },
           {
@@ -73,12 +71,6 @@ class TableMaterial extends React.Component {
             tooltip: 'Save User',
             onClick: (event, rowData) => alert('You saved ' + rowData.name),
           },
-          // {
-          //   icon: DeleteIcon,
-          //   tooltip: 'Delete User',
-          //   onClick: (event, rowData) =>
-          //     window.confirm('You want to delete ' + rowData.name),
-          // },
         ]}
         icons={{
           Search: SearchIcon,
@@ -99,31 +91,25 @@ class TableMaterial extends React.Component {
         editable={{
           onRowAdd: (newData) =>
             new Promise((resolve, reject) => {
-              setTimeout(() => {
                 resolve();
                 this.rowAdd(newData);
-              }, 1000);
             }),
           onRowUpdate: (newData, oldData) =>
             new Promise((resolve, reject) => {
-              setTimeout(() => {
                 const dataUpdate = [...this.props.clients];
                 const index = oldData.tableData.id;
                 dataUpdate[index] = newData;
                 resolve();
                 this.rowUpdate(newData);
-              }, 1000);
             }),
           onRowDelete: (oldData) =>
             new Promise((resolve, reject) => {
-              setTimeout(() => {
                 const dataDelete = [...this.props.clients];
                 const index = oldData.tableData.id;
                 const _id = oldData._id;
                 dataDelete.splice(index, 1);
                 resolve();
                 this.rowDelete(_id);
-              }, 1000);
             }),
         }}
       />

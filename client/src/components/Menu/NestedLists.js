@@ -25,7 +25,33 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(4),
   },
 }));
-export default function NestedList() {
+
+const links = [
+  {
+    title: 'Домашняя страница',
+    href: '/home',
+    icon: <HomeIcon />,
+  },
+  {
+    title: 'Таблица пациентов',
+    href: '/table',
+    icon: <LocalHospitalIcon />,
+  },
+  {
+    title: 'Данные пациентов',
+    href: '/content',
+    icon: <AccessibilityIcon />,
+  },
+];
+const sublinks = [
+  {
+    title: 'Профиль',
+    href: '/profile',
+    icon: <StarBorder />,
+  },
+];
+
+export default function NestedList(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
 
@@ -39,49 +65,36 @@ export default function NestedList() {
       aria-labelledby="nested-list-subheader"
       subheader={
         <ListSubheader component="div" id="nested-list-subheader">
-          Nested List Items
+          Menu
         </ListSubheader>
       }
       className={classes.root}
     >
-      <ListItem button>
-        <ListItemIcon>
-          <HomeIcon />
-        </ListItemIcon>
-        <Link to="/home">Домашняя страница</Link>
-      </ListItem>
-
-      <ListItem button>
-        <ListItemIcon>
-          <LocalHospitalIcon />
-        </ListItemIcon>
-        <Link to="/table">Таблица пациентов</Link>
-      </ListItem>
-      <ListItem button>
-        <ListItemIcon>
-          <AccessibilityIcon />
-        </ListItemIcon>
-        <Link to="/content">Данные пациентов</Link>
-      </ListItem>
+      {links.map((link, index) => (
+        <ListItem key={index} button>
+          <ListItemIcon>{link.icon}</ListItemIcon>
+          <Link to={link.href}>{link.title} </Link>
+        </ListItem>
+      ))}
 
       <ListItem button onClick={handleClick}>
         <ListItemIcon>
           <InboxIcon />
         </ListItemIcon>
         {open ? <ExpandLess /> : <ExpandMore />}
-        <Link to="/profile">Дополнительно</Link>
+        <ListItemText primary="Дополнительно" />
       </ListItem>
 
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItem button className={classes.nested}>
-            <ListItemIcon>
-              <StarBorder />
-            </ListItemIcon>
-            <ListItemText primary="Starred" />
-          </ListItem>
+          {sublinks.map((sublink, index) => (
+            <ListItem key={index} button className={classes.nested}>
+              <ListItemIcon>{sublink.icon}</ListItemIcon>
+              <Link to={sublink.href}>{sublink.title}</Link>
+            </ListItem>
+          ))}
         </List>
       </Collapse>
     </List>
   );
-    }
+}

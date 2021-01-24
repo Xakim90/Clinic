@@ -22,12 +22,16 @@ class ContentMain extends React.Component {
     return (
       <div className="row">
         <div className="col-md-3">
-          <div className={styles.miniCardHeight + ' card mt-2 mb-1'}>
-            <div className="card-header py-1 font-weight-bolder">Жалобы :</div>
-            <div className="card-body overflow-auto">
-              {console.log(this.props.clients)}
+          <div className={styles.miniCardHeight + ' card mt-2 mb-2'}>
+            <div className="card-header py-1 font-weight-bolder">
+              Пациенты :
+            </div>
+            <div className="card-body overflow-auto mb-2">
               {this.props.clients.map((patient, index) => (
-                <p key={index} className="card-text font-weight-bolder">
+                <p
+                  key={index}
+                  className="card-text font-weight-bolder cursor-pointer hover:text-blue-900"
+                >
                   {patient.name}
                 </p>
               ))}

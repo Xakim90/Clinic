@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
@@ -82,15 +81,14 @@ function ResponsiveMenu(props) {
     window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <div className="col-span-2 md:col-span-6 md:flex justify-end sm:flex justify-end lg:flex justify-end">
+    <div className="md:flex justify-end">
       <CssBaseline />
       <AppBar
         position="fixed"
         className={classes.appBar}
         color="secondary"
-        // classes={{colorSecondary: gray}}
       >
-        <Toolbar className="flex justify-end">
+        <Toolbar className="md:flex justify-end">
           <IconButton
             color="inherit"
             aria-label="open drawer"
