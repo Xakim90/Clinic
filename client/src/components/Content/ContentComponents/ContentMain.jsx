@@ -4,6 +4,8 @@ import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import styles from './ContentMain.module.css';
+import LinearIndeterminate from '../../Progress/LinearIndeterminate';
+import ContentHeader from '../ContentComponents/ContentHeader';
 
 const data = [
   {
@@ -12,86 +14,115 @@ const data = [
   },
 ];
 
-
 class ContentMain extends React.Component {
   componentDidMount() {
     this.props.getClientsFetch();
-    let client = this.props.clients;
   }
+  setClientHistory = (e) => {
+    e.preventDefault();
+    let clients = this.props.clients;
+    let id = e.currentTarget.getAttribute('data-id');
+    let currentHistory = document.getElementById('currentHistory');
+    clients.map((client, index) => {
+      if (client._id === id) {
+        currentHistory.innerText = client.name;
+      }
+    });
+  };
+
   render() {
     return (
-      <div className="row">
-        <div className="col-md-3">
-          <div className={styles.miniCardHeight + ' card mt-2 mb-2'}>
-            <div className="card-header py-1 font-weight-bolder">
-              Пациенты :
-            </div>
-            <div className="card-body overflow-auto mb-2">
-              {this.props.clients.map((patient, index) => (
-                <p
-                  key={index}
-                  className="card-text font-weight-bolder cursor-pointer hover:text-blue-900"
-                >
-                  {patient.name}
-                </p>
-              ))}
-            </div>
-          </div>
-          <div className={styles.miniCardHeight + ' card mt-1 mb-1'}>
-            <div className="card-header py-1 font-weight-bolder">
-              История болезни :
-            </div>
-            <div className="card-body overflow-auto">
-              {data.map((patient, index) => (
-                <p key={index} className="card-text font-weight-bolder">
-                  {patient.history}
-                </p>
-              ))}
-            </div>
-          </div>
-        </div>
-        <div className="col-md-3">
-          <div className={styles.cardHeight + ' card mt-2 mb-1'}>
-            <div className="card-header py-1 font-weight-bolder">Plan</div>
-            <div className="card-body overflow-auto">
-              <p className="card-text font-weight-bolder">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Perspiciatis sit, error aliquid, facere voluptatum eveniet
-                deserunt itaque quas aliquam temporibus rerum unde natus
-                explicabo numquam voluptate. Voluptas dolorum voluptate maiores.
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Perspiciatis sit, error aliquid, facere voluptatum eveniet
-                deserunt itaque quas aliquam temporibus rerum unde natus
-                explicabo numquam voluptate. Voluptas dolorum voluptate maiores.
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="col-md-6 bordered">
-          <div className={styles.cardHeight + ' card mt-2 mb-1'}>
-            <div className="card-header py-1 font-weight-bolder">Plan</div>
-            <div className="card-body overflow-auto">
-              <p className="card-text font-weight-bolder">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                Perspiciatis sit, error aliquid, facere voluptatum eveniet
-                deserunt itaque quas aliquam temporibus rerum unde natus
-                explicabo numquam voluptate. Voluptas dolorum voluptate maiores.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <>
+        {!this.props.initialized ? null : (
+          // window.history.pushState({ foo: 'bar' }, 'Signin', '/signin')
+          <>
+            {!this.props.loaded ? (
+              <LinearIndeterminate />
+            ) : (
+              <>
+                <ContentHeader />
+                <div className="row">
+                  <div className="col-md-3">
+                    <div className={styles.miniCardHeight + ' card mt-2 mb-2'}>
+                      <div className="card-header py-1 font-weight-bolder">
+                        Пациенты :
+                      </div>
+                      <div className="card-body overflow-auto mb-2">
+                        {this.props.clients.map((patient, index) => (
+                          <p
+                            key={index}
+                            data-id={patient._id}
+                            onClick={(e) => this.setClientHistory(e)}
+                            className="card-text font-weight-bolder cursor-pointer hover:text-blue-900"
+                          >
+                            {patient.name}
+                          </p>
+                        ))}
+                      </div>
+                    </div>
+                    <div className={styles.miniCardHeight + ' card mt-1 mb-1'}>
+                      <div className="card-header py-1 font-weight-bolder">
+                        История болезни :
+                      </div>
+                      <div className="card-body overflow-auto">
+                        {data.map((patient, index) => (
+                          <p
+                            key={index}
+                            className="card-text font-weight-bolder"
+                          >
+                            {patient.history}
+                          </p>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-md-3">
+                    <div className={styles.cardHeight + ' card mt-2 mb-1'}>
+                      <div className="card-header py-1 font-weight-bolder">
+                        History
+                      </div>
+                      <div className="card-body overflow-auto">
+                        <p
+                          className="card-text font-weight-bolder"
+                          id="currentHistory"
+                        ></p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-md-6 bordered">
+                    <div className={styles.cardHeight + ' card mt-2 mb-1'}>
+                      <div className="card-header py-1 font-weight-bolder">
+                        Plan
+                      </div>
+                      <div className="card-body overflow-auto">
+                        <p className="card-text font-weight-bolder">
+                          Lorem, ipsum dolor sit amet consectetur adipisicing
+                          elit. Perspiciatis sit, error aliquid, facere
+                          voluptatum eveniet deserunt itaque quas aliquam
+                          temporibus rerum unde natus explicabo numquam
+                          voluptate. Voluptas dolorum voluptate maiores.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+          </>
+        )}
+      </>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-    clients: state.clientsReducer.clients,
-    loaded: state.clientsReducer.loaded,
+  clients: state.clientsReducer.clients,
+  loaded: state.clientsReducer.loaded,
+  initialized: state.authReducer.initialized,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getClientsFetch: () => dispatch(getClientsFetch())
+  getClientsFetch: () => dispatch(getClientsFetch()),
 });
 
 const ContentContainer = compose(

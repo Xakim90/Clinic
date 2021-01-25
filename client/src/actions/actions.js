@@ -69,6 +69,7 @@ export const userLoginFetch = user => {
         if (data.user) {
           localStorage.setItem('token', data.user.token);
           dispatch(loginUser(data.user));
+          window.history.go(-1);
         }
       });
   }

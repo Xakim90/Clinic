@@ -13,7 +13,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import StarBorder from '@material-ui/icons/StarBorder';
 import HomeIcon from '@material-ui/icons/Home';
 import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -73,9 +73,26 @@ export default function NestedList(props) {
       {links.map((link, index) => (
         <ListItem key={index} button>
           <ListItemIcon>{link.icon}</ListItemIcon>
-          <Link to={link.href}>{link.title} </Link>
+          <NavLink
+            to={link.href}
+            activeStyle={{
+              fontWeight: 'bold',
+              color: 'red',
+            }}
+          >
+            {link.title}{' '}
+          </NavLink>
         </ListItem>
       ))}
+      {/* <NavLink
+        to="/faq"
+        activeStyle={{
+          fontWeight: 'bold',
+          color: 'red',
+        }}
+      >
+        FAQs
+      </NavLink> */}
 
       <ListItem button onClick={handleClick}>
         <ListItemIcon>

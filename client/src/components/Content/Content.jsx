@@ -7,7 +7,7 @@ class Content extends React.Component {
     render() {
         return (
             <div>
-                <ContentHeader/>
+                
                 <ContentContainer/>
                 {/* <ContentMain/> */}
             </div>

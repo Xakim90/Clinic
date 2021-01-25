@@ -15,7 +15,6 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 
-
 class TableMaterial extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.children !== this.props.children) {
@@ -65,6 +64,9 @@ class TableMaterial extends React.Component {
             },
           },
         ]}
+        options={{
+          selection: true,
+        }}
         actions={[
           {
             icon: SaveIcon,
@@ -91,31 +93,30 @@ class TableMaterial extends React.Component {
         editable={{
           onRowAdd: (newData) =>
             new Promise((resolve, reject) => {
-                resolve();
-                this.rowAdd(newData);
+              resolve();
+              this.rowAdd(newData);
             }),
           onRowUpdate: (newData, oldData) =>
             new Promise((resolve, reject) => {
-                const dataUpdate = [...this.props.clients];
-                const index = oldData.tableData.id;
-                dataUpdate[index] = newData;
-                resolve();
-                this.rowUpdate(newData);
+              const dataUpdate = [...this.props.clients];
+              const index = oldData.tableData.id;
+              dataUpdate[index] = newData;
+              resolve();
+              this.rowUpdate(newData);
             }),
           onRowDelete: (oldData) =>
             new Promise((resolve, reject) => {
-                const dataDelete = [...this.props.clients];
-                const index = oldData.tableData.id;
-                const _id = oldData._id;
-                dataDelete.splice(index, 1);
-                resolve();
-                this.rowDelete(_id);
+              const dataDelete = [...this.props.clients];
+              const index = oldData.tableData.id;
+              const _id = oldData._id;
+              dataDelete.splice(index, 1);
+              resolve();
+              this.rowDelete(_id);
             }),
         }}
       />
     );
   }
 }
-
 
 export default TableMaterial;

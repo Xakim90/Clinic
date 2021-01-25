@@ -13,21 +13,33 @@ import { connect } from 'react-redux';
 
 class Table extends React.Component {
   
-  componentDidMount() {
-    this.props.getClientsFetch();
+  async componentDidMount() {
+    {this.props.initialized ?
+      await this.props.getClientsFetch()
+      : null
+    }
   }
   render() {
     return (
       <>
-      {!this.props.loaded ? <LinearIndeterminate /> :
-        <TableMaterial
-          clientPostFetch={this.props.clientPostFetch}
-          getClientsFetch={this.props.getClientsFetch}
-          removeClient={this.props.removeClient}
-          updateClient={this.props.updateClient}
-          clients={this.props.clients}
-        />
-      }
+        {!this.props.initialized ? (
+          null
+          // window.history.pushState({ foo: 'bar' }, 'Signin', '/signin')
+        ) : (
+          <>
+            {!this.props.loaded ? (
+              <LinearIndeterminate />
+            ) : (
+              <TableMaterial
+                clientPostFetch={this.props.clientPostFetch}
+                getClientsFetch={this.props.getClientsFetch}
+                removeClient={this.props.removeClient}
+                updateClient={this.props.updateClient}
+                clients={this.props.clients}
+              />
+            )}
+          </>
+        )}
       </>
     );
   }
@@ -36,6 +48,7 @@ class Table extends React.Component {
 const mapStateToProps = (state) => ({
   clients: state.clientsReducer.clients,
   loaded: state.clientsReducer.loaded,
+  initialized: state.authReducer.initialized,
 });
 
 const mapDispatchToProps = (dispatch) => ({
