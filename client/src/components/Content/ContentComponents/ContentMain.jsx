@@ -175,7 +175,6 @@ class ContentMain extends React.Component {
                               <TextareaAutosize
                                 name="history"
                                 onChange={this.handleChange}
-                                value={this.state.clientData[0].history}
                                 className="w-full"
                                 aria-label="minimum height"
                                 rowsMin={3}
