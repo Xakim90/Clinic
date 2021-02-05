@@ -77,6 +77,8 @@ class ContentMain extends React.Component {
         });
         if (client.clientData[0] !== undefined) {
           this.isNotEmptyHistory = true;
+        }else {
+          this.isNotEmptyHistory = false;
         }
       }
     });
