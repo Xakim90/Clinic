@@ -4,17 +4,12 @@ import { connect, Provider } from 'react-redux';
 import { compose } from 'redux';
 import store from './redux/redux-store';
 import { createBrowserHistory } from 'history';
-import {
-  BrowserRouter,
-  Redirect,
-  Route,
-  Router,
-  withRouter,
-} from 'react-router-dom';
-import { getProfileFetch } from './actions/actions';
-import { logoutUser } from './actions/actions';
+import { BrowserRouter,withRouter } from 'react-router-dom';
+// import { getProfileFetch } from './actions/actions';
+import { logoutUser } from './actions/api';
+import {usersAPI} from './actions/api'
 const history = createBrowserHistory();
-const location = history.location;
+// const location = history.location;
 
 class App extends React.Component {
   componentDidMount() {
@@ -41,7 +36,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getProfileFetch: () => dispatch(getProfileFetch()),
+  getProfileFetch: () => dispatch(usersAPI.getProfileFetch()),
   logoutUser: () => dispatch(logoutUser()),
 });
 

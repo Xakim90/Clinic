@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { userPostFetch } from '../../actions/actions';
+import { usersAPI } from '../../actions/api';
 import TextField from '@material-ui/core/TextField';
 import styles from './Signin.module.css'
 
@@ -106,7 +107,7 @@ class Signup extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  userPostFetch: userInfo => dispatch(userPostFetch(userInfo))
+  userPostFetch: userInfo => dispatch(usersAPI.userPostFetch(userInfo))
 })
 
 export default connect(null, mapDispatchToProps)(Signup);

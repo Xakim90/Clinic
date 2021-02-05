@@ -4,6 +4,8 @@ import { userLoginFetch } from '../../actions/actions';
 import styles from './Signin.module.css';
 import { Link } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
+import { usersAPI } from '../../actions/api'
+import { makeStyles } from '@material-ui/core';
 
 
 class Signin extends Component {
@@ -74,7 +76,7 @@ class Signin extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  userLoginFetch: userInfo => dispatch(userLoginFetch(userInfo))
+  userLoginFetch: userInfo => dispatch(usersAPI.userLoginFetch(userInfo))
 })
 
 export default connect(null, mapDispatchToProps)(Signin);

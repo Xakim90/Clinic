@@ -1,14 +1,9 @@
-.cardHeight{
-
-height: 20rem!important;
-
+.cardHeight {
+  height: 30rem !important;
 }
-.miniCardHeight{
-
-    height: 10rem!important;
-    
+.miniCardHeight {
+  height: 14.5rem !important;
 }
 .card-body {
-    overflow-y: scroll;
+  overflow-y: scroll;
 }
-

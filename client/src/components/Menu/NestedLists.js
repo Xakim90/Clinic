@@ -84,16 +84,6 @@ export default function NestedList(props) {
           </NavLink>
         </ListItem>
       ))}
-      {/* <NavLink
-        to="/faq"
-        activeStyle={{
-          fontWeight: 'bold',
-          color: 'red',
-        }}
-      >
-        FAQs
-      </NavLink> */}
-
       <ListItem button onClick={handleClick}>
         <ListItemIcon>
           <InboxIcon />

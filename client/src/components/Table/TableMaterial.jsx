@@ -16,22 +16,18 @@ import AddBoxIcon from '@material-ui/icons/AddBox';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 
 class TableMaterial extends React.Component {
-  componentDidUpdate(prevProps) {
-    if (prevProps.children !== this.props.children) {
-    }
-  }
-
+  // componentDidUpdate(prevProps) {
+  //   if (prevProps.children !== this.props.children) {
+  //   }
+  // }
   rowAdd = (newData) => {
     this.props.clientPostFetch(newData);
-    this.props.getClientsFetch();
   };
   rowUpdate = (newData) => {
     this.props.updateClient(newData);
-    this.props.getClientsFetch();
   };
   rowDelete = (id) => {
     this.props.removeClient(id);
-    this.props.getClientsFetch();
   };
   render() {
     return (

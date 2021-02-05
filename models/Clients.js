@@ -16,7 +16,9 @@ ClientsSchema.methods.toAuthJSON = function () {
     name: this.name,
     surname: this.surname,
     status: this.status,
-    clientData: this.clientData
+    clientData: this.clientData,
+    birthYear: this.birthYear,
+    birthCity: this.birthCity
   };
 };
 // ClientsSchema.methods.toAuthJSON = function () {

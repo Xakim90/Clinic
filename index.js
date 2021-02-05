@@ -27,11 +27,16 @@ if (!isProduction) {
 }
 
 //Configure Mongoose
-// mongoose.connect("mongodb://localhost/clinic-db", { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
+// mongoose.connect('mongodb://localhost/clinic-db', {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+//   useFindAndModify: false,
+//   upsert: true,
+// });
 mongoose.connect(
   process.env.MONGO_DB_URI ||
     'mongodb+srv://admin:88442211bmw@cluster0.l7txu.mongodb.net/hospital',
-  { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }
+  { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, upsert: true }
 );
 mongoose.connection.on('connected', () => {
   console.log('MONGOOSE IS CONNECTED');
@@ -73,7 +78,7 @@ if  (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
 }
 
-// app.use(express.static(path.join(__dirname, 'client/build')));
+//app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.get('*/', function (req, res) {
   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));

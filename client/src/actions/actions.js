@@ -1,7 +1,7 @@
 import history from '../history';
 
-//const url = "http://localhost:8080"
-const url = ""
+const url = "http://localhost:8080"
+// const url = ""
 
 const loginUser = user => ({
   type: 'INITIALIZED_SUCCESS',
@@ -15,9 +15,13 @@ const loadClients = client => ({
 
 export const logoutUser = () => ({
   type: 'LOG_OUT'
-})
-
-
+});
+// export const logout = () => {
+//   return (dispatch) => {
+//     logoutUser();
+//     localStorage.removeItem('token');
+//   };
+// };
 
 export const userPostFetch = user => {
   return dispatch => {
@@ -31,6 +35,10 @@ export const userPostFetch = user => {
     })
       .then(resp => resp.json())
       .then(data => {
+        if (data.errors !== undefined) {
+          var errorKey = Object.keys(data.errors); //получаем ключи объекта в виде массива
+          document.getElementById("signupErrorDiv").innerHTML = errorKey[0] + " " + data.errors[errorKey[0]];
+        }
         if (data.message !== undefined) {
           console.log("data.message")
         }
@@ -38,16 +46,9 @@ export const userPostFetch = user => {
           localStorage.setItem("token", data.user.token);
           dispatch(loginUser(data.user));
         }
-        if (data.errors !== undefined) {
-          var errorKey = Object.keys(data.errors); //получаем ключи объекта в виде массива
-          document.getElementById("signupErrorDiv").innerHTML = errorKey[0] + " " + data.errors[errorKey[0]];
-        }
       })
   }
 }
-
-
-
 
 export const userLoginFetch = user => {
   return dispatch => {
@@ -64,7 +65,6 @@ export const userLoginFetch = user => {
         if (data.errors) {
           document.getElementById('errorDiv').innerHTML =
             'wrong email or password';
-          return;
         }
         if (data.user) {
           localStorage.setItem('token', data.user.token);
@@ -97,13 +97,6 @@ export const getProfileFetch = () => {
           }
         });
     }
-  }
-}
-
-export const logout = () => {
-  return dispatch => {
-    logoutUser();
-    localStorage.removeItem("token");
   }
 }
 
@@ -149,8 +142,6 @@ export const clientPostFetch = (client) => {
         }
         if (data !== undefined) {
           dispatch(loadClients(data.client));
-          // localStorage.setItem('token', data.user.token);
-          // dispatch(loginUser(data.user));
         }
         if (data.errors !== undefined) {
         }
@@ -166,7 +157,20 @@ export const removeClient = (id) => {
         Accept: 'application/json',
       },
       body: JSON.stringify({ id }),
-    });
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        debugger
+        if (data.message !== undefined) {
+          console.log('data.message');
+        }
+        if (data !== undefined) {
+          debugger
+          dispatch(loadClients(data.client));
+        }
+        if (data.errors !== undefined) {
+        }
+      });
   };
 };
 
@@ -186,9 +190,6 @@ export const updateClient = ( newData ) => {
           console.log('data.message');
         }
         if (data !== undefined) {
-          // dispatch(loadClients(data.client));
-          // localStorage.setItem('token', data.user.token);
-          // dispatch(loginUser(data.user));
         }
         if (data.errors !== undefined) {
         }

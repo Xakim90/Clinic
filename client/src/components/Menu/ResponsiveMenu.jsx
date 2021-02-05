@@ -19,7 +19,9 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import Signup from '../../components/Auth/Signup';
 import { BrowserRouter, Redirect, Route, withRouter } from 'react-router-dom';
-import NestedLists from './NestedLists'
+import NestedLists from './NestedLists';
+import ExampleMain from '../Test/ExampleMain';
+
 
 const drawerWidth = 240;
 
@@ -147,11 +149,12 @@ function ResponsiveMenu(props) {
         <div className={classes.toolbar} />
 
         <Route exact path="/">
-          {!props.initialized ? (
+          <Home />
+          {/* {!props.initialized ? (
             <Signin />
           ) : (
               <TableContainer />
-            )}
+            )} */}
         </Route>
         <Route exact path="/signin">
           <Signin />
@@ -161,7 +164,7 @@ function ResponsiveMenu(props) {
           <Signup />
         </Route>
 
-        <Route exact path="/content">
+        <Route path="/content">
           <Content />
         </Route>
 
@@ -181,7 +184,7 @@ function ResponsiveMenu(props) {
           <Home />
         </Route>
         <Route exact path="/test">
-          <Clock />
+          <ExampleMain />
         </Route>
       </main>
     </div>

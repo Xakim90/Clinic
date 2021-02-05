@@ -1,24 +1,17 @@
 import React from 'react';
 import TableMaterial from './TableMaterial';
 import LinearIndeterminate from '../Progress/LinearIndeterminate';
-import {
-  getClientsFetch,
-  clientPostFetch,
-  removeClient,
-  updateClient,
-} from '../../actions/actions';
+import { clientAPI } from '../../actions/api';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 
 class Table extends React.Component {
   
-  async componentDidMount() {
-    {this.props.initialized ?
-      await this.props.getClientsFetch()
-      : null
-    }
+  componentDidMount() {
+    this.props.getClientsFetch();
   }
+  
   render() {
     return (
       <>
@@ -36,7 +29,7 @@ class Table extends React.Component {
                 removeClient={this.props.removeClient}
                 updateClient={this.props.updateClient}
                 clients={this.props.clients}
-              />
+              />  
             )}
           </>
         )}
@@ -52,10 +45,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getClientsFetch: () => dispatch(getClientsFetch()),
-  clientPostFetch: (clientInfo) => dispatch(clientPostFetch(clientInfo)),
-  removeClient: (id) => dispatch(removeClient(id)),
-  updateClient: ( newData ) => dispatch(updateClient( newData )),
+  getClientsFetch: () => dispatch(clientAPI.getClientsFetch()),
+  clientPostFetch: (clientInfo) => dispatch(clientAPI.clientPostFetch(clientInfo)),
+  removeClient: (id) => dispatch(clientAPI.removeClient(id)),
+  updateClient: (newData) => dispatch(clientAPI.updateClient(newData)),
 });
 
 const TableContainer = compose(
