@@ -1,6 +1,5 @@
 import React from 'react';
 import MaterialTable from 'material-table';
-import DeleteIcon from '@material-ui/icons/Delete';
 import SaveIcon from '@material-ui/icons/Save';
 import SearchIcon from '@material-ui/icons/Search';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -16,22 +15,33 @@ import AddBoxIcon from '@material-ui/icons/AddBox';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 
 class TableMaterial extends React.Component {
-  // componentDidUpdate(prevProps) {
-  //   if (prevProps.children !== this.props.children) {
-  //   }
-  // }
-  rowAdd = (newData) => {
-    this.props.clientPostFetch(newData);
+  state = {
+    loading: false
+  }
+
+  isLoading (bool) {
+    this.setState({loading: bool})
+  }
+  async rowAdd (newData) {
+    this.isLoading(true);
+    await this.props.clientPostFetch(newData);
+    this.isLoading(false);
   };
-  rowUpdate = (newData) => {
-    this.props.updateClient(newData);
-  };
-  rowDelete = (id) => {
-    this.props.removeClient(id);
+  async rowUpdate(newData) {
+    this.isLoading(true);
+    await this.props.updateClient(newData);
+    this.isLoading(false);
+  }
+  async rowDelete (id) {
+    this.isLoading(true);
+    await this.props.removeClient(id);
+    this.isLoading(false);
   };
   render() {
     return (
       <MaterialTable
+        style={{ textTransform: 'none' }}
+        isLoading={this.state.loading}
         title="Таблица пациентов"
         data={this.props.clients}
         columns={[

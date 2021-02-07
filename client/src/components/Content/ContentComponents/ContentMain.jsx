@@ -10,8 +10,6 @@ import SimpleModal from '../../Modal/SimpleModal';
 import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
 
-let body = document.getElementsByTagName('body');
-let isNotEmptyHistory = false;
 let isOpen = false;
 
 class ContentMain extends React.Component {
@@ -85,11 +83,9 @@ class ContentMain extends React.Component {
   };
   setOpen = () => {
     isOpen = true;
-    // console.log(isOpen)
   };
   handleClose = () => {
     isOpen = false;
-    // console.log(isOpen);
   };
 
   render() {
